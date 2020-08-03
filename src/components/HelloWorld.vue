@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <p style="font-size: 4em;">
+      Check square: <FAIcon icon="check-square" />
+    </p>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,10 +34,21 @@
 </template>
 
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon as FAIcon } from '@fortawesome/vue-fontawesome'
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  components: {
+    FAIcon
+  },
+
+  created() {
+    library.add(faCheckSquare)
   }
 }
 </script>
