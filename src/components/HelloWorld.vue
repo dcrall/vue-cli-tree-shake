@@ -38,6 +38,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/vue-fontawesome'
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 
+library.add(faCheckSquare)
+
 export default {
   name: 'HelloWorld',
   props: {
@@ -46,10 +48,6 @@ export default {
   components: {
     FAIcon
   },
-
-  created() {
-    library.add(faCheckSquare)
-  }
 }
 </script>
 
