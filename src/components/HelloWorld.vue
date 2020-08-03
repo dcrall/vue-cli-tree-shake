@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ message }}</h1>
+<!--    <p>-->
+<!--      Check square: <FAIcon icon="check-square" />-->
+<!--    </p>-->
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,11 +34,37 @@
 </template>
 
 <script>
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon as FAIcon } from '@fortawesome/vue-fontawesome'
+// import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+
+import { kebabCase } from 'lodash-es'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+
+  methods: {
+    // title(input) {
+    //   return titleCase(input)
+    // }
+  },
+
+  computed: {
+    message: function() {
+      return kebabCase(this.msg);
+    }
   }
+
+  // components: {
+  //   FAIcon
+  // },
+  //
+  // created() {
+  //   library.add(faCheckSquare)
+  // }
 }
 </script>
 
