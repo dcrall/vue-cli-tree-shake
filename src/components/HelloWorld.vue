@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p style="font-size: 4em;">
-      Check square: <CheckSquare class="icon" aria-hidden="true"></CheckSquare>
+      Check square: <fa :icon="faCheckSquare" />
     </p>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -34,15 +34,23 @@
 </template>
 
 <script>
-import CheckSquare from '@fortawesome/fontawesome-free/svgs/solid/check-square.svg?inline';
+import Fa from 'vue-fa'
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
   },
   components: {
-    CheckSquare
+    Fa
   },
+  data() {
+    return {
+      faCheckSquare
+    }
+  }
 }
 </script>
 
