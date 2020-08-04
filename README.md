@@ -17,17 +17,80 @@ Branch `02-default-lib-build` adds the `build-lib` script to `package.json` to b
 
 ## Import single function from Lodash
 Since we were not seeing tree shaking from our FontAwesome imports, I wanted to see what the behavior would be with other libraries. Lodash is often mentioned as a package that can benefit from selective import. Branch`03-selective-lodash-import` brings the `kebabCase` function into `HelloWorld`. We can see that the resulting build is still a reasonable size.
+
+```javascript
+import { kebabCase } from 'lodash-es'
+```
  
 ![Lodash Import](./public/images/ac-lbirary-with-lodash-function.png)
 
 ## FontAwesome single icon, official library import
 
-The branch `04-selective-fa-svg-core-import` demonstrates the technique we were using to import FontAwesome icons into our library. We took this technique from FontAwesome's [vue-fontawesome](https://github.com/FortAwesome/vue-fontawesome#recommended) repository, and we believed this was the best practice. Initially, the 789k number scared me. You can see the minimized version isn't quite so bad but still seems excessive for a single SVG icon. 
+The branch `04-selective-fa-svg-core-import` demonstrates the technique we were using to import FontAwesome icons into our library. We took this technique from FontAwesome's [vue-fontawesome](https://github.com/FortAwesome/vue-fontawesome#recommended) repository, and we believed this was the best practice. Initially, the 789k number scared me. You can see the minimized version isn't quite so bad but still seems excessive for a single SVG icon.
+
+```vue
+<template>
+    <p style="font-size: 4em;">
+      Check square: <FAIcon icon="check-square" />
+    </p>
+</template>
+```
+
+```vue
+<script>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon as FAIcon } from '@fortawesome/vue-fontawesome'
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faCheckSquare)
+
+export default {
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  },
+  components: {
+    FAIcon
+  },
+}
+</script>
+``` 
 
 ![FontAwesome Import](./public/images/ad-library-with-single-FA-icon.png)
 
 ## FontAwesome single icon, 3rd party vue-fa component
-Researching this problem, I eventually stumbled upon this issue in Font-Awesome repository: [Tree-Shaking broken on fontawesome-svg-core](https://github.com/FortAwesome/Font-Awesome/issues/16005). A comment here pointed me to the [vue-fa](https://cweili.github.io/vue-fa/) component. The branch `06-vue-fa-import` illustrates the build sizes when using `vue-fa` to import a single icon. It's interesting to see that the unminimized UMD library is still big, but the minimized version is quite small.  
+Researching this problem, I eventually stumbled upon this issue in Font-Awesome repository: [Tree-Shaking broken on fontawesome-svg-core](https://github.com/FortAwesome/Font-Awesome/issues/16005). A comment here pointed me to the [vue-fa](https://cweili.github.io/vue-fa/) component. The branch `06-vue-fa-import` illustrates the build sizes when using `vue-fa` to import a single icon. It's interesting to see that the unminimized UMD library is still big, but the minimized version is quite small.
+
+```vue
+<template>
+    <p style="font-size: 4em;">
+      Check square: <fa :icon="faCheckSquare" />
+    </p>
+</template>
+```
+
+```vue
+<script>
+import Fa from 'vue-fa'
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+
+
+export default {
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  },
+  components: {
+    Fa
+  },
+  data() {
+    return {
+      faCheckSquare
+    }
+  }
+}
+</script>
+```  
 
 ![vue-fa Import](./public/images/ae-library-with-vue-fa-component.png)
 
